@@ -1,39 +1,819 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jonathan Rico Photography</title>
+  <meta
+    name="description"
+    content="Jonathan Rico Photography - cinematic landscapes, city scenes, and visual storytelling."
+  />
+
   <style>
-    body { font-family: Arial; margin: 0; background: #111; color: white; text-align: center; }
-    .hero { padding: 100px 20px; }
-    .btn { background: white; color: black; padding: 10px 20px; text-decoration: none; }
-    img { width: 90%; max-width: 400px; margin: 10px; }
+    :root {
+      --bg: #080808;
+      --bg-soft: #111111;
+      --card: rgba(255, 255, 255, 0.05);
+      --text: #f5f5f5;
+      --muted: #b8b8b8;
+      --line: rgba(255, 255, 255, 0.1);
+      --white: #ffffff;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.05), transparent 32%),
+        linear-gradient(180deg, #050505 0%, #0a0a0a 100%);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(14px);
+      background: rgba(8, 8, 8, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 18px;
+      background: var(--white);
+      color: #000;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .nav-cta:hover,
+    .btn:hover,
+    .secondary-btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.94;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(0,0,0,0.38), rgba(0,0,0,0.74)),
+        url("IMG_9287.jpeg") center center / cover no-repeat;
+      transform: scale(1.03);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255,255,255,0.06), transparent 30%),
+        linear-gradient(180deg, transparent 55%, rgba(8,8,8,0.85) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: min(920px, calc(100% - 32px));
+      text-align: center;
+      padding: 100px 0 70px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: #ededed;
+      font-size: 12px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 8vw, 84px);
+      line-height: 0.98;
+      letter-spacing: -1.6px;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0 auto 30px;
+      color: #dfdfdf;
+      font-size: clamp(16px, 2.3vw, 20px);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 44px;
+    }
+
+    .btn,
+    .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 170px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+    }
+
+    .btn {
+      background: var(--white);
+      color: #000;
+    }
+
+    .secondary-btn {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      border-radius: 18px;
+      padding: 18px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: #d5d5d5;
+      font-size: 14px;
+    }
+
+    section {
+      padding: 88px 0;
+    }
+
+    .section-header {
+      margin-bottom: 34px;
+      text-align: center;
+    }
+
+    .section-label {
+      color: #d0d0d0;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 5vw, 48px);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .section-copy {
+      max-width: 690px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: #111;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      min-height: 280px;
+      isolation: isolate;
+    }
+
+    .card.large {
+      grid-column: span 7;
+      min-height: 460px;
+    }
+
+    .card.medium {
+      grid-column: span 5;
+      min-height: 460px;
+    }
+
+    .card.half {
+      grid-column: span 6;
+      min-height: 340px;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.04);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.72) 100%);
+      z-index: 1;
+    }
+
+    .card-caption {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 18px;
+      z-index: 2;
+    }
+
+    .card-caption h3 {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .card-caption p {
+      color: #d4d4d4;
+      font-size: 14px;
+    }
+
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .about-main h3,
+    .services h3,
+    .contact-panel h3 {
+      font-size: 26px;
+      margin-bottom: 14px;
+    }
+
+    .about-main p,
+    .services li,
+    .contact-panel p {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .about-main p + p {
+      margin-top: 14px;
+    }
+
+    .services-list {
+      list-style: none;
+      display: grid;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .services-list li {
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .services-list strong {
+      display: block;
+      color: var(--white);
+      margin-bottom: 4px;
+      font-size: 16px;
+    }
+
+    .quote-section {
+      padding-top: 0;
+    }
+
+    .quote-box {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 38px 28px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .quote-box p {
+      font-size: clamp(20px, 3vw, 30px);
+      max-width: 850px;
+      margin: 0 auto 14px;
+      line-height: 1.3;
+    }
+
+    .quote-box span {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .contact-panel ul {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .contact-panel li {
+      color: var(--muted);
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .contact-panel li strong {
+      color: var(--white);
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .contact-box {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 34px 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-box h3 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .contact-box p {
+      max-width: 420px;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .footer {
+      padding: 28px 0 40px;
+      border-top: 1px solid var(--line);
+      color: #9f9f9f;
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .portfolio-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .card.large,
+      .card.medium,
+      .card.half {
+        grid-column: span 1;
+        min-height: 340px;
+      }
+
+      .about-wrap,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-inner {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .brand {
+        width: 100%;
+        text-align: center;
+      }
+
+      .nav-links {
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .nav-cta {
+        width: 100%;
+      }
+
+      section {
+        padding: 72px 0;
+      }
+
+      .panel,
+      .contact-box,
+      .quote-box {
+        padding: 24px 18px;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card.large,
+      .card.medium,
+      .card.half {
+        min-height: 300px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
   </style>
 </head>
-
 <body>
 
-<div class="hero">
-  <h1>Jonathan Rico Photography</h1>
-  <p>Capturing real moments, real stories.</p>
-  <a class="btn" href="#">Book a Shoot</a>
-</div>
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="brand">Jonathan Rico Photography</div>
 
-<h2>My Work</h2>
-<img src="IMG_9287.jpeg">
-<img src="IMG_9380.jpeg">
-<img src="IMG_9345.jpeg">
-<img src="IMG_9405.jpeg">
-<img src="IMG_9406.jpeg">
-<img src="IMG_9410.jpeg">
-<img src="IMG_9429.jpeg">
-<img src="IMG_9430.jpeg">
+      <nav class="nav-links">
+        <a href="#portfolio">Portfolio</a>
+        <a href="#about">About</a>
+        <a href="#services">Style</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
+      <a class="nav-cta" href="https://instagram.com/YOURUSERNAME" target="_blank">Book on Instagram</a>
+    </div>
+  </header>
 
-<h2>About Me</h2>
-<p>I’m Jonathan, a photographer based in California. I focus on capturing authentic moments and creating a comfortable experience for every client.</p>
+  <section class="hero">
+    <div class="hero-content fade-in">
+      <div class="eyebrow">California Photographer</div>
+      <h1>Clean visuals. Real moments. Cinematic feeling.</h1>
+      <p>
+        I create photography that feels bold, natural, and memorable — from landscapes
+        and city scenes to visuals that tell a story with mood, detail, and style.
+      </p>
 
-<h2>Contact</h2>
-<p>DM me on Instagram to book.</p>
+      <div class="hero-actions">
+        <a class="btn" href="https://instagram.com/YOURUSERNAME" target="_blank">Book a Shoot</a>
+        <a class="secondary-btn" href="#portfolio">View Portfolio</a>
+      </div>
 
+      <div class="hero-stats">
+        <div class="stat">
+          <strong>Cinematic</strong>
+          <span>Moody visuals with strong atmosphere and clean composition.</span>
+        </div>
+        <div class="stat">
+          <strong>Authentic</strong>
+          <span>Photos that feel real, natural, and true to the moment.</span>
+        </div>
+        <div class="stat">
+          <strong>Creative</strong>
+          <span>A style built around detail, color, light, and storytelling.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Portfolio</div>
+        <h2 class="section-title">Selected Work</h2>
+        <p class="section-copy">
+          A curated collection of the strongest images in my portfolio — chosen to show
+          atmosphere, detail, and the visual style I’m building.
+        </p>
+      </div>
+
+      <div class="portfolio-grid">
+        <article class="card large fade-in">
+          <img src="IMG_9287.jpeg" alt="Golden Gate Bridge portfolio photo" />
+          <div class="card-caption">
+            <h3>Iconic Views</h3>
+            <p>Strong framing, clean sky, and timeless landscape energy.</p>
+          </div>
+        </article>
+
+        <article class="card medium fade-in">
+          <img src="IMG_9380.jpeg" alt="Ocean cliff portfolio photo" />
+          <div class="card-caption">
+            <h3>Coastal Scenes</h3>
+            <p>Bright color, texture, and depth through natural light.</p>
+          </div>
+        </article>
+
+        <article class="card half fade-in">
+          <img src="IMG_9345.jpeg" alt="Ocean rocks and waves portfolio photo" />
+          <div class="card-caption">
+            <h3>Motion & Mood</h3>
+            <p>Movement in the water with a darker, more dramatic feel.</p>
+          </div>
+        </article>
+
+        <article class="card half fade-in">
+          <img src="IMG_9405.jpeg" alt="Mountain landscape portfolio photo" />
+          <div class="card-caption">
+            <h3>Landscape Drama</h3>
+            <p>Natural scale, depth, and cinematic scenery.</p>
+          </div>
+        </article>
+
+        <article class="card half fade-in">
+          <img src="IMG_9406.jpeg" alt="Night city portfolio photo" />
+          <div class="card-caption">
+            <h3>Night Stories</h3>
+            <p>Urban light, contrast, and a city feel after dark.</p>
+          </div>
+        </article>
+
+        <article class="card half fade-in">
+          <img src="IMG_9410.jpeg" alt="City lights portfolio photo" />
+          <div class="card-caption">
+            <h3>Color & Energy</h3>
+            <p>Vibrant scenes that feel alive, bright, and memorable.</p>
+          </div>
+        </article>
+
+        <article class="card half fade-in">
+          <img src="IMG_9429.jpeg" alt="Butterfly detail portfolio photo" />
+          <div class="card-caption">
+            <h3>Small Details</h3>
+            <p>Close-up work that captures texture, focus, and color.</p>
+          </div>
+        </article>
+
+        <article class="card half fade-in">
+          <img src="IMG_9455.jpeg" alt="Flower detail portfolio photo" />
+          <div class="card-caption">
+            <h3>Natural Color</h3>
+            <p>Detail-focused shots with depth and rich visual texture.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <div class="about-wrap">
+        <div class="panel about-main fade-in">
+          <div class="section-label">About</div>
+          <h3>My style is built on atmosphere, composition, and real feeling.</h3>
+          <p>
+            I’m Jonathan, a photographer based in California. I’m focused on creating
+            images that feel cinematic, polished, and honest. My goal is not just to
+            take a photo, but to make it feel like a moment worth remembering.
+          </p>
+          <p>
+            I pay attention to light, framing, color, and detail so each image feels
+            intentional. Whether I’m shooting landscapes, city scenes, or future client
+            work, I want the final result to feel clean, strong, and visually memorable.
+          </p>
+        </div>
+
+        <div class="panel services fade-in" id="services">
+          <div class="section-label">Style</div>
+          <h3>What I focus on</h3>
+          <ul class="services-list">
+            <li>
+              <strong>Cinematic visuals</strong>
+              Strong mood, natural contrast, and a polished look.
+            </li>
+            <li>
+              <strong>Clean composition</strong>
+              Framing that feels intentional and balanced.
+            </li>
+            <li>
+              <strong>Visual storytelling</strong>
+              Photos that show more than the subject — they show a feeling.
+            </li>
+            <li>
+              <strong>Natural experience</strong>
+              A calm, comfortable approach that helps real moments stand out.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-section">
+    <div class="container">
+      <div class="quote-box fade-in">
+        <p>
+          “More than just taking pictures, my goal is to create images people can feel.”
+        </p>
+        <span>Jonathan Rico Photography</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="panel contact-panel fade-in">
+          <div class="section-label">Contact</div>
+          <h3>Let’s create something strong together.</h3>
+          <p>
+            If you want to work with me, ask about a shoot, or connect about future
+            projects, message me on Instagram.
+          </p>
+
+          <ul>
+            <li>
+              <strong>Best way to reach me</strong>
+              Instagram DM
+            </li>
+            <li>
+              <strong>Based in</strong>
+              California
+            </li>
+            <li>
+              <strong>Available for</strong>
+              Creative shoots, portraits, visuals, and portfolio-building work
+            </li>
+          </ul>
+        </div>
+
+        <div class="contact-box fade-in">
+          <h3>Ready to book?</h3>
+          <p>
+            Tap below and send me a message on Instagram.
+          </p>
+          <a class="btn" href="https://instagram.com/j.ricophotographer" target="j.ricophotographer">DM Me on Instagram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Jonathan Rico Photography</span>
+      <span>Built to showcase clean, cinematic visuals.</span>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".fade-in").forEach((el) => {
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
+
